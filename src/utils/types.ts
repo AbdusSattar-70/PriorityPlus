@@ -4,6 +4,14 @@ export enum Priority {
   High = "High",
 }
 
+export enum FilterTodos {
+  "Completed" = "Completed",
+  "Incomplete" = "Incomplete",
+  "Priority-low" = "Priority-low",
+  "Priority-medium" = "Priority-medium",
+  "Priority-high" = "Priority-high",
+}
+
 export type TodoType = {
   id: number;
   text: string;
