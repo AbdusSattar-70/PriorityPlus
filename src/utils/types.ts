@@ -25,12 +25,3 @@ export type TodoStateType = {
   filterValue: FilterTodos;
   searchTerm: string;
 };
-
-export type ActionType = {
-  ADD: string;
-  EDIT: string;
-  TOGGLE: string;
-  REMOVE: string;
-  COMPLETED: string;
-  INCOMPLETED: string;
-};

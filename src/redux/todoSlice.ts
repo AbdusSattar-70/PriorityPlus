@@ -3,6 +3,11 @@ import { PayloadAction } from "@reduxjs/toolkit";
 import { Priority, TodoStateType, TodoType } from "../utils/types";
 import { FilterTodos } from "../utils/types";
 
+// Function to update local storage
+const updateLocalStorage = (state: TodoStateType) => {
+  localStorage.setItem("myTodo", JSON.stringify(state));
+};
+
 const initialState: TodoStateType = localStorage.getItem("myTodo")
   ? JSON.parse(localStorage.getItem("myTodo")!)
   : {
@@ -17,7 +22,7 @@ export const todoSlice = createSlice({
   reducers: {
     addTodo: (state, action: PayloadAction<TodoType>) => {
       state.todos.push(action.payload);
-      localStorage.setItem("myTodo", JSON.stringify(state));
+      updateLocalStorage(state);
     },
     editTodo: (
       state,
@@ -29,26 +34,26 @@ export const todoSlice = createSlice({
         todo.text = text;
         todo.priority = priority;
       }
-      localStorage.setItem("myTodo", JSON.stringify(state));
+      updateLocalStorage(state);
     },
     removeTodo: (state, action: PayloadAction<number>) => {
       state.todos = state.todos.filter((todo) => todo.id !== action.payload);
-      localStorage.setItem("myTodo", JSON.stringify(state));
+      updateLocalStorage(state);
     },
     toggleTodo: (state, action: PayloadAction<number>) => {
       const todo = state.todos.find((todo) => todo.id === action.payload);
       if (todo) {
         todo.completed = !todo.completed;
       }
-      localStorage.setItem("myTodo", JSON.stringify(state));
+      updateLocalStorage(state);
     },
     filterTodosAction: (state, action: PayloadAction<FilterTodos>) => {
       state.filterValue = action.payload;
-      localStorage.setItem("myTodo", JSON.stringify(state));
+      updateLocalStorage(state);
     },
     searchAction: (state, action: PayloadAction<string>) => {
       state.searchTerm = action.payload;
-      localStorage.setItem("myTodo", JSON.stringify(state));
+      updateLocalStorage(state);
     },
   },
 });

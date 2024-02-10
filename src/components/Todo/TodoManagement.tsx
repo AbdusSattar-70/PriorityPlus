@@ -2,17 +2,15 @@ import { FaCircleCheck } from "react-icons/fa6";
 import { BiSolidAddToQueue } from "react-icons/bi";
 import { ImRadioUnchecked } from "react-icons/im";
 import { MdSelectAll } from "react-icons/md";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { useRef } from "react";
 import FilterBy from "./FilterBy";
 import CreateTodo from "./CreateTodo";
-import { searchAction } from "../../redux/todoSlice";
+import SearchTodo from "./SearchTodo";
 
 const TodoManagement = () => {
-  const dispatch = useDispatch();
   const AddTodoModalRef = useRef<HTMLDialogElement | null>(null);
-  const searchTerm = useSelector((state: RootState) => state.todos.searchTerm);
   const todos = useSelector((state: RootState) => state.todos.todos);
   const completedTodos = todos.filter((todo) => todo.completed);
   const incompletedTodos = todos.filter((todo) => !todo.completed);
@@ -42,19 +40,7 @@ const TodoManagement = () => {
         </div>
 
         <div className="grid grid-cols-1 gap-2 bg-slate-600 p-3 sm:grid-cols-2">
-          <div className="form-control">
-            <label className="label sr-only">
-              <span className="label-text">search</span>
-            </label>
-            <input
-              type="search"
-              placeholder="search..."
-              value={searchTerm}
-              onChange={(e) => dispatch(searchAction(e.target.value))}
-              className="input input-bordered bg-slate-800"
-              required
-            />
-          </div>
+          <SearchTodo />
           <FilterBy />
         </div>
       </section>
