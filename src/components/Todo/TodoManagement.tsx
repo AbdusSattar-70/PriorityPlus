@@ -4,14 +4,13 @@ import { ImRadioUnchecked } from "react-icons/im";
 import { MdSelectAll } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import FilterBy from "./FilterBy";
 import CreateTodo from "./CreateTodo";
+import SearchTodo from "./SearchTodo";
 
 const TodoManagement = () => {
   const AddTodoModalRef = useRef<HTMLDialogElement | null>(null);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [filterValue, setFilterValue] = useState("");
   const todos = useSelector((state: RootState) => state.todos.todos);
   const completedTodos = todos.filter((todo) => todo.completed);
   const incompletedTodos = todos.filter((todo) => !todo.completed);
@@ -41,20 +40,8 @@ const TodoManagement = () => {
         </div>
 
         <div className="grid grid-cols-1 gap-2 bg-slate-600 p-3 sm:grid-cols-2">
-          <div className="form-control">
-            <label className="label sr-only">
-              <span className="label-text">search</span>
-            </label>
-            <input
-              type="search"
-              placeholder="search..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="input input-bordered bg-slate-800"
-              required
-            />
-          </div>
-          <FilterBy filterValue={filterValue} setFilterValue={setFilterValue} />
+          <SearchTodo />
+          <FilterBy />
         </div>
       </section>
       <CreateTodo AddTodoModalRef={AddTodoModalRef} />

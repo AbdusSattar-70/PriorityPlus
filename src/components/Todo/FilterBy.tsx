@@ -1,14 +1,13 @@
+import { useDispatch, useSelector } from "react-redux";
+import { filterTodosAction } from "../../redux/todoSlice";
 import { FilterTodos } from "../../utils/types";
+import { RootState } from "../../redux/store";
 
-interface FilterByProps {
-  filterValue: string;
-  setFilterValue: (value: string) => void;
-}
-
-const FilterBy: React.FC<FilterByProps> = ({ filterValue, setFilterValue }) => {
-  const handleTodoFilter = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setFilterValue(event.target.value);
-  };
+const FilterBy = () => {
+  const dispatch = useDispatch();
+  const filterValue = useSelector(
+    (state: RootState) => state.todos.filterValue
+  );
 
   return (
     <div className="form-control gap-1">
@@ -19,7 +18,9 @@ const FilterBy: React.FC<FilterByProps> = ({ filterValue, setFilterValue }) => {
         id="filterTodo"
         name="filterTodo"
         value={filterValue}
-        onChange={handleTodoFilter}
+        onChange={(e) =>
+          dispatch(filterTodosAction(e.target.value as FilterTodos))
+        }
         className="select select-bordered bg-slate-800"
       >
         <option value="" disabled>

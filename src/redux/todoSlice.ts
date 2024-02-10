@@ -1,14 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { Priority, TodoStateType, TodoType } from "../utils/types";
+import { FilterTodos } from "../utils/types";
 
-const initialState: TodoStateType = {
-  todos: [
-    { id: 1, text: "Task 1", completed: false, priority: Priority.Low },
-    { id: 2, text: "Task 2", completed: false, priority: Priority.Medium },
-    { id: 3, text: "Task 3", completed: true, priority: Priority.High },
-  ],
+// Function to update local storage
+const updateLocalStorage = (state: TodoStateType) => {
+  localStorage.setItem("myTodo", JSON.stringify(state));
 };
+
+const initialState: TodoStateType = localStorage.getItem("myTodo")
+  ? JSON.parse(localStorage.getItem("myTodo")!)
+  : {
+      todos: [],
+      filterValue: FilterTodos.All,
+      searchTerm: "",
+    };
 
 export const todoSlice = createSlice({
   name: "todos",
@@ -16,6 +22,7 @@ export const todoSlice = createSlice({
   reducers: {
     addTodo: (state, action: PayloadAction<TodoType>) => {
       state.todos.push(action.payload);
+      updateLocalStorage(state);
     },
     editTodo: (
       state,
@@ -27,26 +34,26 @@ export const todoSlice = createSlice({
         todo.text = text;
         todo.priority = priority;
       }
+      updateLocalStorage(state);
     },
     removeTodo: (state, action: PayloadAction<number>) => {
       state.todos = state.todos.filter((todo) => todo.id !== action.payload);
+      updateLocalStorage(state);
     },
     toggleTodo: (state, action: PayloadAction<number>) => {
       const todo = state.todos.find((todo) => todo.id === action.payload);
       if (todo) {
         todo.completed = !todo.completed;
       }
+      updateLocalStorage(state);
     },
-    filterCompleted: (state) => {
-      state.todos = state.todos.filter((todo) => todo.completed);
+    filterTodosAction: (state, action: PayloadAction<FilterTodos>) => {
+      state.filterValue = action.payload;
+      updateLocalStorage(state);
     },
-    filterIncomplete: (state) => {
-      state.todos = state.todos.filter((todo) => !todo.completed);
-    },
-    filterByPriority: (state, action: PayloadAction<Priority>) => {
-      state.todos = state.todos.filter(
-        (todo) => todo.priority === action.payload
-      );
+    searchAction: (state, action: PayloadAction<string>) => {
+      state.searchTerm = action.payload;
+      updateLocalStorage(state);
     },
   },
 });
@@ -56,9 +63,8 @@ export const {
   editTodo,
   removeTodo,
   toggleTodo,
-  filterCompleted,
-  filterIncomplete,
-  filterByPriority,
+  filterTodosAction,
+  searchAction,
 } = todoSlice.actions;
 
 export default todoSlice.reducer;
