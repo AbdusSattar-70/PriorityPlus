@@ -18,7 +18,9 @@ const PrioritySelector: React.FC<PrioritySelectorProps> = ({
 
   return (
     <div className="form-control gap-1">
-      <label htmlFor="priority">Set Priority Level</label>
+      <label htmlFor="priority" className="sr-only">
+        Set Priority Level
+      </label>
       <select
         id="priority"
         name="priority"

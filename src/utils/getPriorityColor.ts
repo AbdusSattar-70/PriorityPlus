@@ -7,7 +7,7 @@ export const getPriorityColorClass = (priority: Priority) => {
     case Priority.Medium:
       return "text-green-500";
     case Priority.High:
-      return "text-red-500";
+      return "text-blue-500";
     default:
       return "";
   }
