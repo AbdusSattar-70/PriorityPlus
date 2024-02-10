@@ -5,6 +5,7 @@ export enum Priority {
 }
 
 export enum FilterTodos {
+  "All" = "All",
   "Completed" = "Completed",
   "Incomplete" = "Incomplete",
   "Priority-low" = "Priority-low",
@@ -21,6 +22,7 @@ export type TodoType = {
 
 export type TodoStateType = {
   todos: TodoType[];
+  filterValue: FilterTodos;
 };
 
 export type ActionType = {

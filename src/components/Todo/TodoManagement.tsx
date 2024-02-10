@@ -11,7 +11,6 @@ import CreateTodo from "./CreateTodo";
 const TodoManagement = () => {
   const AddTodoModalRef = useRef<HTMLDialogElement | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
-  const [filterValue, setFilterValue] = useState("");
   const todos = useSelector((state: RootState) => state.todos.todos);
   const completedTodos = todos.filter((todo) => todo.completed);
   const incompletedTodos = todos.filter((todo) => !todo.completed);
@@ -54,7 +53,7 @@ const TodoManagement = () => {
               required
             />
           </div>
-          <FilterBy filterValue={filterValue} setFilterValue={setFilterValue} />
+          <FilterBy />
         </div>
       </section>
       <CreateTodo AddTodoModalRef={AddTodoModalRef} />

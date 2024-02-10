@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { Priority, TodoStateType, TodoType } from "../utils/types";
+import { FilterTodos } from "../utils/types";
 
 const initialState: TodoStateType = {
   todos: [
@@ -8,6 +9,7 @@ const initialState: TodoStateType = {
     { id: 2, text: "Task 2", completed: false, priority: Priority.Medium },
     { id: 3, text: "Task 3", completed: true, priority: Priority.High },
   ],
+  filterValue: FilterTodos.All,
 };
 
 export const todoSlice = createSlice({
@@ -37,28 +39,13 @@ export const todoSlice = createSlice({
         todo.completed = !todo.completed;
       }
     },
-    filterCompleted: (state) => {
-      state.todos = state.todos.filter((todo) => todo.completed);
-    },
-    filterIncomplete: (state) => {
-      state.todos = state.todos.filter((todo) => !todo.completed);
-    },
-    filterByPriority: (state, action: PayloadAction<Priority>) => {
-      state.todos = state.todos.filter(
-        (todo) => todo.priority === action.payload
-      );
+    filterTodosAction: (state, action: PayloadAction<FilterTodos>) => {
+      state.filterValue = action.payload;
     },
   },
 });
 
-export const {
-  addTodo,
-  editTodo,
-  removeTodo,
-  toggleTodo,
-  filterCompleted,
-  filterIncomplete,
-  filterByPriority,
-} = todoSlice.actions;
+export const { addTodo, editTodo, removeTodo, toggleTodo, filterTodosAction } =
+  todoSlice.actions;
 
 export default todoSlice.reducer;

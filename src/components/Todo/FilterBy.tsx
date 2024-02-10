@@ -1,13 +1,16 @@
+import { useDispatch } from "react-redux";
+import { filterTodosAction } from "../../redux/todoSlice";
 import { FilterTodos } from "../../utils/types";
+import { useState } from "react";
 
-interface FilterByProps {
-  filterValue: string;
-  setFilterValue: (value: string) => void;
-}
+const FilterBy = () => {
+  const [filterValue, setFilterValue] = useState(FilterTodos.All);
+  const dispatch = useDispatch();
 
-const FilterBy: React.FC<FilterByProps> = ({ filterValue, setFilterValue }) => {
   const handleTodoFilter = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setFilterValue(event.target.value);
+    const selectedFilter = event.target.value as FilterTodos;
+    setFilterValue(selectedFilter);
+    dispatch(filterTodosAction(selectedFilter));
   };
 
   return (
