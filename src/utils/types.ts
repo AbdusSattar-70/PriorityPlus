@@ -23,6 +23,7 @@ export type TodoType = {
 export type TodoStateType = {
   todos: TodoType[];
   filterValue: FilterTodos;
+  searchTerm: string;
 };
 
 export type ActionType = {

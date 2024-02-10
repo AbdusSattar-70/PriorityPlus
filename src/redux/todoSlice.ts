@@ -10,6 +10,7 @@ const initialState: TodoStateType = {
     { id: 3, text: "Task 3", completed: true, priority: Priority.High },
   ],
   filterValue: FilterTodos.All,
+  searchTerm: "",
 };
 
 export const todoSlice = createSlice({
@@ -42,10 +43,19 @@ export const todoSlice = createSlice({
     filterTodosAction: (state, action: PayloadAction<FilterTodos>) => {
       state.filterValue = action.payload;
     },
+    searchAction: (state, action: PayloadAction<string>) => {
+      state.searchTerm = action.payload;
+    },
   },
 });
 
-export const { addTodo, editTodo, removeTodo, toggleTodo, filterTodosAction } =
-  todoSlice.actions;
+export const {
+  addTodo,
+  editTodo,
+  removeTodo,
+  toggleTodo,
+  filterTodosAction,
+  searchAction,
+} = todoSlice.actions;
 
 export default todoSlice.reducer;
