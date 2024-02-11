@@ -33,7 +33,7 @@
 
 <!-- PROJECT DESCRIPTION -->
 
-## 📖 MingleMate <a name="about-project"></a>
+## 📖 PriorityPlus <a name="about-project"></a>
 
 PriorityPlus is a simple task management application that helps you organize your tasks based on priority levels and completion status.
 
